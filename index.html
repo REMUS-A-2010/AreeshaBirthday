@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Areesha ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  text-align: center;
+}
+
+/* Background */
+.background {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
+    url("https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2");
+  background-size: cover;
+  background-position: center;
+  animation: zoom 25s ease-in-out infinite alternate;
+  z-index: -4;
+}
+
+@keyframes zoom {
+  to { transform: scale(1.12); }
+}
+
+/* Lights */
+.lights::before,
+.lights::after {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  mix-blend-mode: screen;
+  animation: lights 10s linear infinite;
+  z-index: -3;
+}
+
+.lights::before {
+  background: radial-gradient(circle, rgba(255,80,160,0.35), transparent 60%);
+}
+
+.lights::after {
+  background: radial-gradient(circle, rgba(120,180,255,0.35), transparent 60%);
+  animation-duration: 14s;
+}
+
+@keyframes lights {
+  0% { transform: translate(-10%, -10%) rotate(0deg); }
+  50% { transform: translate(10%, 5%) rotate(180deg); }
+  100% { transform: translate(-10%, -10%) rotate(360deg); }
+}
+
+/* Pulse */
+.pulse {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,60,120,0.1);
+  animation: pulse 1.2s infinite;
+  z-index: -2;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: .15; }
+  50% { opacity: .4; }
+}
+
+/* Fireworks */
+canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Card */
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background: rgba(0,0,0,0.45);
+  padding: 34px;
+  border-radius: 30px;
+  max-width: 420px;
+  backdrop-filter: blur(6px);
+}
+
+.heart {
+  font-size: 46px;
+  animation: beat 1s infinite;
+  margin: 15px 0;
+}
+
+@keyframes beat {
+  50% { transform: scale(1.35); }
+}
+
+p {
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+/* Cake */
+.cake-container {
+  margin: 20px 0;
+}
+
+#cake {
+  width: 180px;
+  height: 110px;
+  background: linear-gradient(#ff9acb, #ff5f9e);
+  border-radius: 0 0 20px 20px;
+  margin: 0 auto 10px;
+  position: relative;
+  box-shadow: 0 6px #c63;
+}
+
+/* Cake name */
+.cake-name {
+  position: absolute;
+  bottom: 35px;
+  width: 100%;
+  text-align: center;
+  font-family: cursive;
+  font-size: 20px;
+  color: white;
+  text-shadow: 0 0 6px #ff5fa2;
+}
+
+/* Candle */
+.candle {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 22px;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.flame {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 14px;
+  background: orange;
+  border-radius: 50%;
+  animation: flicker .3s infinite;
+}
+
+@keyframes flicker {
+  50% { transform: translateX(-50%) scale(1.2); }
+}
+
+.smoke {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: rgba(200,200,200,0.6);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/* Cake cut */
+.cut-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 0;
+  background: white;
+  transition: height .8s ease;
+}
+
+button {
+  margin: 6px;
+  padding: 8px 18px;
+  border-radius: 22px;
+  border: none;
+  background: #ff3f7f;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="lights"></div>
+<div class="pulse" id="pulse"></div>
+<canvas id="fireworks"></canvas>
+
+<div class="container">
+<div class="card">
+  <h1>Happy Birthday 🎂</h1>
+  <h2>Areesha 🌸</h2>
+
+  <div class="heart">❤️</div>
+
+  <!-- CAKE -->
+  <div class="cake-container">
+    <div id="cake">
+      <div class="candle" onclick="blowCandle()">
+        <div class="flame"></div>
+        <div class="smoke"></div>
+      </div>
+      <div class="cake-name">Areesha</div>
+      <div class="cut-line"></div>
+    </div>
+    <button onclick="cutCake()">🔪 Cut the Cake</button>
+    <p style="font-size:12px;opacity:.8">Tap candle to blow 🕯️</p>
+  </div>
+
+  <p id="message">
+    On this day, the world learned a softer rhythm ✨
+  </p>
+
+  <button onclick="loveLetter()">💌 Love Letter</button>
+  <button onclick="concert()">🎤 Concert</button>
+  <button onclick="soft()">🌙 Soft Romance</button>
+  <button onclick="promise()">🎆 Final Promise</button>
+
+  <audio id="song">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c3c4b0c6b.mp3">
+  </audio>
+</div>
+</div>
+
+<script>
+const msg = document.getElementById("message");
+const pulse = document.getElementById("pulse");
+const song = document.getElementById("song");
+
+/* Cake */
+function cutCake() {
+  document.querySelector(".cut-line").style.height = "110px";
+}
+
+function blowCandle() {
+  document.querySelector(".flame").style.display = "none";
+  const smoke = document.querySelector(".smoke");
+  smoke.style.opacity = 1;
+  smoke.style.animation = "smokeUp 1.5s forwards";
+  createFirework();
+}
+
+/* Smoke animation */
+const style = document.createElement("style");
+style.innerHTML = `
+@keyframes smokeUp {
+  to { transform: translate(-50%, -40px) scale(2); opacity: 0; }
+}`;
+document.head.appendChild(style);
+
+/* Fireworks */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let fireworks = [];
+
+function createFirework() {
+  const x = Math.random() * canvas.width;
+  const y = Math.random() * canvas.height / 2;
+  for (let i = 0; i < 40; i++) {
+    fireworks.push({
+      x, y,
+      dx: Math.cos(i) * (Math.random() * 4),
+      dy: Math.sin(i) * (Math.random() * 4),
+      life: 60
+    });
+  }
+}
+
+function animateFireworks() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  fireworks.forEach((f,i)=>{
+    ctx.fillRect(f.x,f.y,3,3);
+    f.x+=f.dx; f.y+=f.dy; f.life--;
+    if(f.life<=0)fireworks.splice(i,1);
+  });
+  requestAnimationFrame(animateFireworks);
+}
+animateFireworks();
+
+/* Messages */
+function loveLetter() {
+  msg.innerHTML = " Hey my love, I don’t always know how to put my feelings into words, but I want you to know how much you truly mean to me.Being with you feels safe and exciting at the same time, and that’s something really special.I’m so grateful for every moment we share and all the memories we’re still going to make. With all my love,Yours 💌";
+}
+function concert() {
+  pulse.style.animationDuration="0.7s";
+  song.play().catch(()=>{});
+  msg.innerHTML="Tonight feels like a concert made for you 🎶";
+}
+function soft() {
+  pulse.style.animationDuration="1.6s";
+  msg.innerHTML="I just want you to know how much you mean to me. Being with you feels peaceful, like everything slows down in the best way.Thank you for being part of my life, for your patience, your smile, and your heart. I’m really grateful for you, and for every moment we share, whether it’s big or small. 🌙";
+}
+function promise() {
+  pulse.style.animationDuration="0.6s";
+  song.play().catch(()=>{});
+  msg.innerHTML="<strong>I want to make you a promise, not one that’s perfect, but one that’s real.I promise to be honest with you, even when it’s hard. I promise to listen, not just hear you, but truly try to understand you. I promise to respect your feelings, your dreams, and the person you are becoming.My love will never die for you ❤️</strong>";
+  for(let i=0;i<6;i++)setTimeout(createFirework,i*400);
+}
+</script>
+
+</body>
+</html>
